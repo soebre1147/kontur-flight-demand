@@ -1,0 +1,19 @@
+{
+  "scenario": "closure",
+  "params": {
+    "demand": 300,
+    "capacity": 180,
+    "businessCapacity": 12,
+    "businessShare": 5,
+    "price": 12000,
+    "budget": 23000,
+    "cancel": 4,
+    "growth": 80,
+    "profile": "balanced",
+    "seed": 42,
+    "departure": "2027-05-22",
+    "flight": "SU1122"
+  },
+  "source": "synthetic_complete_scenario",
+  "instructions": "Set N=300 and departure2027-05-22. Loadbookings+offers; passengers onlyinevaluation."
+}

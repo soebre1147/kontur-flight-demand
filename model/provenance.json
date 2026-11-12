@@ -1,0 +1,17 @@
+{
+  "math_reconstruction_v2.py": {
+    "source_sha256": "f726afd4a86d395130ac44f6135f2836e0dc7569a9b00d3835e373ba1c6bd328",
+    "source_version": "chat mathematical core v2 used by v3",
+    "app_changes": "Optional empty-purchase preparation with complete offers; external quantity-prior requirement for empty journals."
+  },
+  "math_reconstruction_v3.py": {
+    "source_sha256": "52b992e5efc1cde3a4701ea4f598ae10452b3f03187bbac2cf9e6ec4eb7729c2",
+    "source_version": "chat v3 2026-11-10",
+    "app_changes": "Relative imports; prepare_inputs_v3; empty-purchase boundaries and prior provenance; audited mixture median, base scale and unconditional count diagnostics; empty generated journal schema."
+  },
+  "conditional_metrics_v3.py": {
+    "source_sha256": "e12cff704004d201905bc1f9e3190d27a725a18c57c4328940fee3417f5c4949",
+    "source_version": "chat v3 2026-11-10",
+    "app_changes": "None; byte-identical original copy."
+  }
+}

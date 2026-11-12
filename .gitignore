@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+.openai/
+.sites-checkout/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml
+runtime/
+outputs/

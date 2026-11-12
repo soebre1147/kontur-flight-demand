@@ -1,0 +1,29 @@
+{
+  "mode": "simulation",
+  "params": {
+    "demand": 300,
+    "capacity": 180,
+    "businessCapacity": 12
+  },
+  "model": {
+    "method": "v3",
+    "sigma": 0.45,
+    "prior_strength": 0.5
+  },
+  "research": {
+    "scenarios": [
+      "balanced",
+      "early",
+      "late",
+      "burst",
+      "mixed_wtp",
+      "closure",
+      "groups_budget",
+      "high_cancel",
+      "low_demand",
+      "sold_out"
+    ],
+    "runs": 100,
+    "seed_start": 1000
+  }
+}
