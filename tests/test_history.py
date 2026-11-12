@@ -7,7 +7,6 @@ import threading
 import unittest
 import zipfile
 
-from backend.controller import Controller
 from backend.jobs import JobManager
 from backend.reporting import build_report,build_run_archive
 from backend.storage import RunStore
@@ -47,41 +46,11 @@ class HistoryTests(unittest.TestCase):
             self.assertEqual(archive.read(inputs[0]).decode('utf-8-sig'),payload['files'][0]['text'])
             self.assertEqual(len([n for n in archive.namelist() if n.startswith('tables/')]),1)
 
-    def test_controller_references_are_retained_but_never_sent_to_calculation(self):
-        def calculate(payload):
-            self.assertNotIn('reference_files',payload)
-            self.assertNotIn('research',payload)
-            return {'ok':True,'results':{'SU1':{'summary':{}}},'selected_flight':'SU1','params':{},'model':{},'mode':'simulation'}
-        jobs=JobManager(self.store,execute=lambda *args: {'ok':True})
-        try:
-            controller=Controller(self.store,jobs,calculate);context={}
-            ref={'name':'passengers-SU1-2027-05-22.csv','text':'reference data'}
-            answer=controller.handle({'request_id':'1','reference_files':[ref]},context)
-            self.assertTrue(answer['ok']);self.assertEqual(context['reference_files'],[ref])
-            answer2=controller.handle({'request_id':'2','reference_files':None},context)
-            self.assertTrue(answer2['ok'])
-            saved=controller.handle({'action':'load_run','run_id':answer['run_id'],'request_id':'3'},context)
-            self.assertIn('results',saved);self.assertEqual(saved['action'],'load_run')
-            repeated=controller.handle({'action':'replay_run','run_id':answer['run_id'],'request_id':'4'},context)
-            self.assertTrue(repeated['ok']);self.assertEqual(repeated['action'],'replay_run')
-            self.assertNotEqual(repeated['run_id'],answer['run_id'])
-        finally: jobs.shutdown()
-
     def test_evaluation_report_with_per_flight_details_is_not_a_simulation_result(self):
         record={'title':'Проверка по эталону','result':{'ok':True,'summary':{'flights':1},
                 'results':{'SU1122':{'summary':{'mae':2},'tables':{'periods':[{'period':'0–7','estimated':3}]}}},
                 'tables':{'flights':[{'flight':'SU1122','mae':2}]}}}
         self.assertIn('SU1122',build_report(record).decode('utf-8'))
-
-    def test_loading_reference_evaluation_restores_import_context_without_misclassifying_as_calculation(self):
-        jobs=JobManager(self.store,execute=lambda *args: {'ok':True})
-        try:
-            identifier=self.store.create('evaluate','Эталон',{'mode':'import','params':{'demand':300},'files':[]})
-            self.store.complete(identifier,{'ok':True,'results':{'SU1122':{'summary':{'mae':2}}},'tables':{}})
-            response=Controller(self.store,jobs,lambda p:None).handle({'action':'load_run','run_id':identifier,'request_id':'1'}, {})
-            self.assertIn('lab',response);self.assertNotIn('results',response)
-            self.assertEqual(response['mode'],'import');self.assertEqual(response['params']['departure'],'2027-05-22')
-        finally: jobs.shutdown()
 
     def test_running_job_cancels_cooperatively_and_keeps_partial_result(self):
         started=threading.Event();release=threading.Event()

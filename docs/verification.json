@@ -1,31 +1,21 @@
 {
   "date": "2026-11-12",
-  "app_version": "kontur-lab-v4",
+  "app_version": "kontur-native-v5",
   "python_tests": {
-    "passed": 56,
+    "passed": 69,
     "failed": 0
   },
-  "benchmark": {
-    "paired_runs": 1000,
-    "independent_seed_clusters": 100,
-    "mean_mae_difference": -6.744800000000001,
-    "difference_ci_low": -7.3680200000000005,
-    "difference_ci_high": -6.138380000000001,
-    "v3_win_pct": 77.60000000000001,
-    "tie_pct": 3.5999999999999996,
-    "scenario_count": 10,
-    "runs_per_scenario": 100,
-    "generated_realizations": 1000,
-    "fits_attempted": 2000,
-    "successful_fits": 2000,
-    "failed_fits": 0,
-    "seed_start": 1000
+  "interface": {
+    "framework": "native Streamlit",
+    "owned_javascript_files": 0,
+    "legacy_iframe_bridge": false,
+    "python_charts": "Altair"
   },
   "integration_jobs": [
     {
       "action": "evaluate",
       "status": "completed",
-      "seconds": 1.73,
+      "seconds": 1.46,
       "summary": {
         "flights": 1
       }
@@ -33,7 +23,7 @@
     {
       "action": "sensitivity",
       "status": "completed",
-      "seconds": 10.44,
+      "seconds": 7.34,
       "summary": {
         "configurations": 8,
         "successful": 8,
@@ -43,7 +33,7 @@
     {
       "action": "calibration",
       "status": "completed",
-      "seconds": 11.55,
+      "seconds": 12.56,
       "summary": {
         "training_runs": 2,
         "validation_runs": 3,
@@ -51,13 +41,15 @@
         "selected_sigma": 0.45,
         "selected_beta_time": 0.0,
         "selected_beta_qty": 0.0,
-        "selected_mixture": true
+        "selected_mixture": true,
+        "holdout_mae_difference": 0.5333333333333332,
+        "improves_holdout_mae": false
       }
     },
     {
       "action": "forecast",
       "status": "completed",
-      "seconds": 2.08,
+      "seconds": 1.83,
       "summary": {
         "cutoffs": 4,
         "mean_final_absolute_error": 33.037499999999994
@@ -66,7 +58,7 @@
     {
       "action": "policies",
       "status": "completed",
-      "seconds": 1.8,
+      "seconds": 1.7,
       "summary": {
         "scenario": "Сбалансированный спрос",
         "training_runs": 3,
@@ -85,7 +77,7 @@
     {
       "action": "generate_example",
       "status": "completed",
-      "seconds": 0.14,
+      "seconds": 0.12,
       "summary": {
         "scenario": "Закрытие продаж",
         "seed": 9000,
@@ -98,16 +90,37 @@
     }
   ],
   "browser_verified": [
-    "research evaluation without uploaded reference",
-    "independent calibration and explicit application",
-    "reset clears calibration provenance",
-    "sensitivity with empty optional N grid and bootstrap",
-    "cutoff forecast",
-    "policy profit comparison with explicit costs",
-    "history restores full1000run results and config",
-    "officialStreamlit HTML report download",
-    "officialStreamlit ZIP research download"
+    "native form: capacity180 ->150, gross147, net144",
+    "curator CSV upload: two flights, gross119/cancel3/net116 and gross134/cancel6/net128",
+    "switch imported data to a new synthetic scenario",
+    "reset returns default seed42 and net174/capacity180",
+    "background evaluation completes and renders charts/tables",
+    "saved1000run benchmark replaces prior completed job",
+    "history opens full saved research result",
+    "native HTML and ZIP download controls save files",
+    "narrow638px and desktop1440px layouts inspected; viewport reset"
   ],
+  "screenshots": [
+    "docs/native-preview.png",
+    "docs/native-research.png"
+  ],
+  "benchmark": {
+    "paired_runs": 1000,
+    "independent_seed_clusters": 100,
+    "mean_mae_difference": -6.744800000000001,
+    "difference_ci_low": -7.3680200000000005,
+    "difference_ci_high": -6.138380000000001,
+    "v3_win_pct": 77.60000000000001,
+    "tie_pct": 3.5999999999999996,
+    "scenario_count": 10,
+    "runs_per_scenario": 100,
+    "generated_realizations": 1000,
+    "fits_attempted": 2000,
+    "successful_fits": 2000,
+    "failed_fits": 0,
+    "seed_start": 1000,
+    "provenance": "Saved v4 mathematical benchmark; mathematical core unchanged in native-v5; not rerun for interface migration."
+  },
   "limitations": [
     "Synthetic validation is not external airline validation.",
     "Conditional nominal80% intervals covered56.44% of period counts on the1000runbenchmark.",

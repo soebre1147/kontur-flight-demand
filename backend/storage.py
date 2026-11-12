@@ -7,7 +7,7 @@ from pathlib import Path
 import sqlite3
 import uuid
 
-APP_VERSION='kontur-lab-v4'
+APP_VERSION='kontur-native-v5'
 ACTIVE_STATUSES=('queued','running','cancelling')
 
 
@@ -22,8 +22,8 @@ def dumps(value):
 def code_fingerprint(root):
     root=Path(root);digest=sha256()
     files=[root/'app.py',root/'requirements.txt']
-    for directory in ('backend','model','dist'):
-        files.extend(p for p in (root/directory).rglob('*') if p.is_file() and p.suffix in ('.py','.mjs','.html','.css'))
+    for directory in ('backend','model','ui'):
+        files.extend(p for p in (root/directory).rglob('*.py') if p.is_file())
     for file in sorted(files):
         digest.update(file.relative_to(root).as_posix().encode());digest.update(file.read_bytes())
     return digest.hexdigest()
